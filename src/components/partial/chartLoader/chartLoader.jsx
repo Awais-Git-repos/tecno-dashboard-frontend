@@ -26,7 +26,7 @@ function ChartLoader({currentChart}) {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://172.17.43.24:3000/combinedGroup',{models:modelName,defects:damageName,lines:lineName});
+      const response = await axios.post('http://localhost:3000/combinedGroup',{models:modelName,defects:damageName,lines:lineName});
 
       // if (Array.isArray(response.data) && response.data.length > 0) {
         setGroupByError(response.data.data.groupByErrors);

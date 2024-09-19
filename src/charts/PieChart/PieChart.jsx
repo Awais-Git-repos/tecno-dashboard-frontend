@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, Label } from 'recharts';
 import axios from 'axios';
+import BarChart_cate from '../BarChart/BarChart_cate';
 
 const data = [
   { name: 'Scanned', value: 400 },
@@ -20,12 +21,12 @@ function C_PieChart() {
   // Fetch Data
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://172.17.43.24:3000/groupByScanned");
+      const response = await axios.get("http://localhost:3000/groupByScanned");
       console.log(response.data);
       setData([
-        {name:'Scann',value:response.data.totalScanned},
-        {name:'UnScann',value:response.data.totalUnscanned},
-        {name:'Reset',value:response.data.totalReset},
+        {name:'Scann',value:response.data.overall.totalScanned},
+        {name:'UnScann',value:response.data.overall.totalUnscanned},
+        {name:'Reset',value:response.data.overall.totalReset},
       ]);
       // if (Array.isArray(response.data) && response.data.length > 0) {
       //   setData(response.data);
@@ -50,8 +51,9 @@ const totalValue = data.reduce((acc, cur) => acc + cur.value, 0);
     }
   },[data])
   return (
-    <ResponsiveContainer width="100%" height={500}> {/* Increased height for larger appearance */}
-    <h1 style={{fontSize:'1.2rem',marginTop:'0rem',color:'gray'}}>Scan | Unscan | Reset Ratio</h1>
+    <div style={{display:'flex'}}>
+       <ResponsiveContainer width="110%" height={500} > {/* Increased height for larger appearance */}
+    <h1 style={{fontSize:'1.1rem',marginTop:'0rem',color:'gray'}}>Scan | Unscan | Reset Ratio</h1>
       <PieChart>
         <Pie
           data={data}
@@ -74,13 +76,16 @@ const totalValue = data.reduce((acc, cur) => acc + cur.value, 0);
           <Label
             value={`Records: ${totalValue}`}
             position="center"
-            style={{ fontSize: '14px', fill: '#ffff', fontWeight: 'bold' }} // Increased font size for better visibility
+            style={{ fontSize: '13px', fill: '#ffff', fontWeight: 'bold' }} // Increased font size for better visibility
           />
         </Pie>
         <Legend />
         <Tooltip />
       </PieChart>
     </ResponsiveContainer>
+    <BarChart_cate />
+
+    </div>
   );
 }
 
