@@ -140,7 +140,7 @@ function FileHistory() {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await fetch('http://localhost:3000/fileupload/fileData');
+        const response = await fetch('http://172.17.43.24:3000/fileupload/fileData');
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         setFiles(data);
@@ -174,7 +174,7 @@ function FileHistory() {
     setDeleting(true);
 
     try {
-      const response = await fetch('http://localhost:3000/fileupload/fileDelete', {
+      const response = await fetch('http://172.17.43.24:3000/fileupload/fileDelete', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
