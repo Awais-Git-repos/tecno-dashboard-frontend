@@ -21,7 +21,7 @@ function C_PieChart() {
   // Fetch Data
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/groupByScanned");
+      const response = await axios.get("http://172.17.43.24:3000/groupByScanned");
       console.log(response.data);
       setData([
         {name:'Scann',value:response.data.overall.totalScanned},
