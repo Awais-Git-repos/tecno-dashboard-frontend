@@ -127,6 +127,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import axios from 'axios';
 
 function FileHistory() {
   const [files, setFiles] = useState([]);
@@ -138,6 +139,14 @@ function FileHistory() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
+    const infectedRecords = async()=>{
+      try {
+        const response = await axios.delete('http://172.17.43.24:3000/fileupload/fileError');
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     const fetchFiles = async () => {
       try {
         const response = await fetch('http://172.17.43.24:3000/fileupload/fileData');
@@ -152,6 +161,7 @@ function FileHistory() {
       }
     };
 
+    infectedRecords();
     fetchFiles();
   }, []);
 

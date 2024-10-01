@@ -9,6 +9,7 @@ import HorizontalBarChart from './charts/HorizonatlBarChart/HorizontalBarChart.j
 import Home from './pages/Home/Home.jsx'
 import App from './App.jsx'
 import FileUpload from './pages/FileUpload/FileUpload.jsx'
+import SignIn from './Signin/SignIn.jsx'
 
 const routes = [
   {
@@ -19,6 +20,14 @@ const routes = [
         path:'/',
         element: <Home />
       },
+      {
+        path: '/signin',
+        element: <SignIn />
+      },
+    {
+      path: 'check',
+      element: <h1>Hello world</h1>
+    },
       {
         path:'/fileupload',
         element: <FileUpload />

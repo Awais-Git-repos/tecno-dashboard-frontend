@@ -90,7 +90,7 @@ function HorizontalBarChartByModels({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/groupByScanned');
+        const response = await axios.get('http://172.17.43.24:3000/groupByScanned');
         setData(mapData(response.data));
       } catch (error) {
         console.error('Error fetching data:', error);
