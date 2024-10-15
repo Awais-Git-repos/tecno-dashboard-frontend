@@ -14,7 +14,7 @@
 //   useEffect(() => {
 //     const fetchFiles = async () => {
 //       try {
-//         const response = await fetch('http://localhost:3000/fileupload/fileData');
+//         const response = await fetch('http://172.17.43.24:3000/fileupload/fileData');
 //         const data = await response.json();
 //         setFiles(data); // Set fetched data
 //         setFilteredFiles(data); // Initialize filtered files with all data

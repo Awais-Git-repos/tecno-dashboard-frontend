@@ -5,9 +5,10 @@ import { Box } from '@mui/material'
 import C_PieChart from '../../../charts/PieChart/PieChart'
 import HorizontalBarChartByLines from '../../../charts/HorizontalBarChartByLines/HorizontalBarChartByLines'
 import HorizontalBarChartByModels from '../../../charts/BarChart/BarChart'
+import HorizontalBarChartByRatio from '../../../charts/HorizontalBarChartByRatio/HorizontalBarChartByRatio'
 import axios from 'axios'
 
-function ChartLoader({currentChart}) {
+function ChartLoader({currentChart, setRunning, setModelsName, setStartingDate, setEndingDate}) {
   const [models, setModel] = useState('');
   const [defect, setDefect] = useState('');
   const [lines, setLines] = useState('');
@@ -15,19 +16,23 @@ function ChartLoader({currentChart}) {
   const [groupByLines, setGroupByLines] = useState('');
   const [groupByError, setGroupByError] = useState('');
   const [groupByModels, setGroupyModels] = useState('');
+  const [groupByRatio, setGroupByRatio] = useState('');
   const [loading, setLoading] = useState(true);
 
   const [modelName, setmodelName] = React.useState([]);
   const [damageName, setdamageName] = React.useState([]);
   const [lineName, setLineName] = useState([]);
 
-
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [value, setValue] = useState('');
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://172.17.43.24:3000/combinedGroup',{models:modelName,defects:damageName,lines:lineName});
+      const response = await axios.post('http://172.17.43.24:3000/combinedGroup',{models:modelName,defects:damageName,lines:lineName,startDate,endDate});
 
+    
       // if (Array.isArray(response.data) && response.data.length > 0) {
         setGroupByError(response.data.data.groupByErrors);
         setGroupByLines(response.data.data.groupByLines);
@@ -50,15 +55,31 @@ function ChartLoader({currentChart}) {
     }
   };
 
+  const fetchRatio = async()=>{
+    try {
+      const response = await axios.post("http://172.17.43.24:3000/defectsRatio",{models:modelName,lines:lineName,defectsDescription:damageName})
+      console.log("The Defects Ratio: ",response.data);
+      setGroupByRatio(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
   useEffect(()=>{
     if (run) {
       fetchData();
+      fetchRatio();
+      setModelsName(modelName);
+      setRunning(true);
     }
     setRun(false);
   },[run])
 
   useEffect(()=>{
     fetchData();
+    fetchRatio();
     console.log("The Program is loading...");
   },[])
   return (
@@ -79,6 +100,12 @@ function ChartLoader({currentChart}) {
     groupByLines={groupByLines}
     lines={lines}
     setLineName={setLineName}
+    setStartDate={setStartDate}
+    setEndDate={setEndDate}
+    setStartingDate={setStartingDate}
+    setEndingDate={setEndingDate}
+    setValue={setValue}
+    value={value}
     />}
     {currentChart == 'two' && <HorizontalBarChart groupByErrors={groupByError} 
      loading={loading} 
@@ -94,6 +121,12 @@ function ChartLoader({currentChart}) {
      groupByLines={groupByLines}
      lines={lines}
      setLineName={setLineName}
+     setStartDate={setStartDate}
+     setStartingDate={setStartingDate}
+     setEndingDate={setEndingDate}
+    setEndDate={setEndDate}
+    setValue={setValue}
+    value={value}
   />}
     {currentChart == 'three' && <HorizontalBarChartByLines groupByLines={groupByLines} 
     loading={loading}
@@ -108,8 +141,31 @@ function ChartLoader({currentChart}) {
     lineName={lineName}
     lines={lines}
     setLineName={setLineName}
+    setStartDate={setStartDate}
+    setEndDate={setEndDate}
+    setStartingDate={setStartingDate}
+    setEndingDate={setEndingDate}
+    setValue={setValue}
+    value={value}
     />}
     {currentChart == 'four' && <C_PieChart />}
+    {currentChart == 'five' && <HorizontalBarChartByRatio 
+    datas={groupByRatio} 
+    loading={loading}
+    setRun={setRun} 
+    setModel={setModel}
+    models={models}
+    defect={defect}
+    modelName={modelName}
+    setModelName={setmodelName}
+    damageName={damageName}
+    setdamageName={setdamageName}
+    lineName={lineName}
+    lines={lines}
+    setLineName={setLineName}
+    setStartDate={setStartDate}
+    setEndDate={setEndDate}
+    />}
 
     </Box>
   )

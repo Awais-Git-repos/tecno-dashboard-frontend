@@ -352,7 +352,7 @@ export default function FilterByModels({ models = [], modelName, setModelName })
   } = useAutocomplete({
     id: 'customized-autocomplete',
     multiple: true,
-    options: models[0] || [], // Safe default value
+    options: models || [], // Safe default value
     getOptionLabel: (option) => option,
     value: modelName,
     onChange: (event, newValue) => {

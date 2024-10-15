@@ -8,6 +8,33 @@ import DamageChips from '../../components/Chips/DamageChips';
 import FilterByDefects from '../../components/AutoComplete/FilterByDefects';
 import FilterByModels from '../../components/AutoComplete/FilterByModels';
 import FilterByLines from '../../components/AutoComplete/FilterByLines';
+import DateRangeFilter from '../../DateRange/DateRangeFilter';
+
+const CustomLegend = (props) => {
+  const { payload, scanned,unscanned,reset,setScanned, setUnscanned, setReset } = props; // Access the legend values
+  const status = ["Scanned","Unscanned","Reset"]
+  const colors = ["#c4c4c4","#e45c5c","#a47cdc"]
+  return (
+    <div style={{ color: '#ffffff',display:'flex',justifyContent:'center' }}>
+      {status.map((entry, index) => (
+        <span onClick={()=>{
+          if(entry == "Scanned"){
+            setScanned(!scanned)
+          }
+          else if(entry == "Unscanned"){
+            setUnscanned(!unscanned)
+          }
+          else if(entry == "Reset"){
+            setReset(!reset)
+          }
+        }} key={`item-${index}`} style={{ marginRight: 10 }}>
+          {/* Access the legend value (entry.value) */}
+          <span style={{ color: colors[index] }}>{entry}</span>
+        </span>
+      ))}
+    </div>
+  );
+};
 
 const CustomYAxisTick = (props) => {
   const { x, y, stroke, value } = props;
@@ -88,9 +115,20 @@ const CustomToolTip = ({ active, payload, label }) => {
 function HorizontalBarChart({groupByErrors,loading, setModel, setRun,models,setModelName,modelName,groupByError,
   lines,setLineName,
   lineName,
-  damageName, setdamageName, defect}) {
+  damageName, setdamageName, defect,
+  setStartDate,
+  setEndDate,
+  setStartingDate,
+  setEndingDate,
+  setValue,
+  value
+
+}) {
   const [data, setData] = useState([]);
   const [sortedData, setSortedData] = useState([]);
+  const [scanned, setScanned] = useState(true);
+  const [unscanned, setUnscanned]= useState(true);
+  const [reset, setReset] = useState(true);
   // const [loading, setLoading] = useState(true); // Add loading state
 
   const fetchData = async () => {
@@ -142,6 +180,13 @@ function HorizontalBarChart({groupByErrors,loading, setModel, setRun,models,setM
  {/* <Grid2 item xs={12} sm={6}> */}
  <FilterByLines lines={lines} lineName={lineName} setLineName={setLineName}/>
  {/* </Grid2> */}
+ <DateRangeFilter
+ setStartDate={setStartDate} setEndDate={setEndDate}
+ setStartingDate={setStartingDate}
+ setEndingDate={setEndingDate}
+ setValue={setValue}
+ value={value}
+  />
  <div>
  <Button onClick={()=>{setRun(true)}} variant='contained' sx={{marginTop:'1rem'}}>RUN Query</Button>
  </div>
@@ -170,28 +215,30 @@ function HorizontalBarChart({groupByErrors,loading, setModel, setRun,models,setM
          stroke="#ffffff"
        />
        <Tooltip content={<CustomToolTip />} />
-       <Legend wrapperStyle={{ color: '#ffffff' }} />
-       <Bar
+       {/* <Legend wrapperStyle={{ color: '#ffffff' }} /> */}
+       <Legend content={(props)=>{return <CustomLegend {...props} scanned={scanned} unscanned={unscanned} reset={reset} setScanned={setScanned} setUnscanned={setUnscanned} setReset={setReset}/>}} wrapperStyle={{ color: '#ffffff' }} />
+
+       {scanned && <Bar
          dataKey="scanned"
          stackId="a"
          fill="#c4c4c4" // Gray
          barSize={20}
          name="Scanned"
-       />
-       <Bar
+       />}
+       {unscanned && <Bar
          dataKey="unscanned"
          stackId="a"
          fill="#e45c5c" // Red
          barSize={20}
          name="Unscanned"
-       />
-       <Bar
+       />}
+       {reset && <Bar
          dataKey="reset"
          stackId="a"
          fill="#a47cdc" // Purple
          barSize={20}
          name="Reset"
-       />
+       />}
      </BarChart>
    </ResponsiveContainer> : <h3>No any data to show</h3>
     )

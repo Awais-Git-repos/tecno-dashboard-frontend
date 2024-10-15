@@ -10,6 +10,8 @@ import Home from './pages/Home/Home.jsx'
 import App from './App.jsx'
 import FileUpload from './pages/FileUpload/FileUpload.jsx'
 import SignIn from './Signin/SignIn.jsx'
+import ShortCards from './shortCards/ShortCards.jsx'
+import RatioCard from './ratioCard/RatioCard.jsx'
 
 const routes = [
   {
@@ -19,6 +21,7 @@ const routes = [
       {
         path:'/',
         element: <Home />
+        // element: <ShortCards />
       },
       {
         path: '/signin',

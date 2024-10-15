@@ -183,7 +183,7 @@ const Root = styled('div')`
 `;
 
 const InputWrapper = styled('div')`
-  width: 300px;
+  width: 200px;
   border: 1px solid #434343;
   background-color: #141414;
   border-radius: 4px;
@@ -298,7 +298,7 @@ export default function FilterByDefects({ defect = [], damageName, setdamageName
   } = useAutocomplete({
     id: 'damage-chips-autocomplete',
     multiple: true,
-    options: defect[0] || [], // Safe default value
+    options: defect || [], // Safe default value
     getOptionLabel: (option) => option,
     onChange: (_, newValue) => setdamageName(newValue),
     value: damageName,

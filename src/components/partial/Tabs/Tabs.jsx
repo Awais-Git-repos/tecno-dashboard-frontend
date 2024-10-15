@@ -6,6 +6,7 @@ import PieChartOutlineIcon from '@mui/icons-material/PieChartOutline';
 import OnDeviceTrainingIcon from '@mui/icons-material/OnDeviceTraining';
 import AddRoadIcon from '@mui/icons-material/AddRoad';
 import DangerousIcon from '@mui/icons-material/Dangerous';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 export default function TabsWrappedLabel({ setCurrentChart }) {
   const [value, setValue] = React.useState('one');
@@ -23,6 +24,9 @@ export default function TabsWrappedLabel({ setCurrentChart }) {
       setCurrentChart('three');
     } else if (value === 'four') {
       setCurrentChart('four');
+    }
+    else if(value == 'five'){
+      setCurrentChart('five');
     }
   }, [value, setCurrentChart]);
 
@@ -56,12 +60,19 @@ export default function TabsWrappedLabel({ setCurrentChart }) {
           icon={<AddRoadIcon sx={{ marginRight: 1 }} />}
           iconPosition="start"
         />
+                 <Tab
+          value="five"
+          label="Ratio"
+          icon={<EqualizerIcon sx={{ marginRight: 1 }} />}
+          iconPosition="start"
+        />
         <Tab
           value="four"
           label="Scan-Unscan-Reset"
           icon={<PieChartOutlineIcon sx={{ marginRight: 1 }} />}
           iconPosition="start"
         />
+
       </Tabs>
     </Box>
   );

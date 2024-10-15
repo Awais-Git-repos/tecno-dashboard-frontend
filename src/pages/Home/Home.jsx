@@ -5,6 +5,8 @@ import logo from '../../assets/tecno_logo.jpeg'
 import { Box } from '@mui/material'
 import TabsWrappedLabel from '../../components/partial/Tabs/Tabs'
 import ChartLoader from '../../components/partial/chartLoader/chartLoader'
+import DonutChartCard from '../../shortCards/ShortCards'
+import axios from 'axios'
 
 
 const TecnoLogo = ()=>{
@@ -16,10 +18,34 @@ const TecnoLogo = ()=>{
 function Home() {
     const [currentChart, setCurrentChart] = useState('');
     const [visible, setVisible] = useState(false);
+    const [running, setRunning] = useState(false);
+    const [modelsName, setModelsName] = useState('');
+    const [inspectedQty, setInspectedQty] = useState('');
+    const [startingDate, setStartingDate] = useState('');
+    const [endingDate, setEndingDate] = useState('');
+
+    const fetchInspectedQty = async()=>{
+      try {
+        const response = await axios.post("http://localhost:3000/inspectedQty",{models:modelsName,startDate:startingDate,endDate:endingDate});
+        console.log("InspectedQty----",response.data);
+        setInspectedQty(response.data);
+      } catch (error) {
+        console.log(error);      
+      }
+    }
+
+    useEffect(()=>{
+      if (running) {
+    fetchInspectedQty();
+      }
+      setRunning(false);
+    },[running])
 
   useEffect(() => {
     // Trigger the transition effect after the component mounts
     setVisible(true);
+    fetchInspectedQty();
+
   }, []);
 
   return (
@@ -47,15 +73,21 @@ function Home() {
     </C_container>
     <TecnoLogo />
    </Box>
-   <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'4rem'}}>
+   <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'4rem',position:'relative'}}>
     <C_container style={{width:'60%'}}>
         <h1>DEFECTS LIBRARY</h1>
     </C_container>
    </Box>
-   <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'3rem'}}>
-    <C_container style={{width:'60%'}}>
+   <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'3rem',position:'relative'}}>
+    <div style={{width:'200px',marginRight:'1rem',marginTop:'13rem'}}>
+   <DonutChartCard  inspectedQty={inspectedQty}/>
+   </div>
+    <C_container style={{width:'60%',marginRight:'13rem'}}>
         <TabsWrappedLabel setCurrentChart={setCurrentChart}/>
-        <ChartLoader currentChart={currentChart}/>
+        <ChartLoader currentChart={currentChart} setRunning={setRunning} setModelsName={setModelsName}
+        setStartingDate={setStartingDate}
+        setEndingDate={setEndingDate}
+        />
     </C_container>
    </Box>
    </>

@@ -299,7 +299,7 @@ export default function FilterByLines({ lines = [], lineName, setLineName }) {
   } = useAutocomplete({
     id: 'damage-chips-autocomplete',
     multiple: true,
-    options: lines[0] || [],
+    options: lines || [],
     getOptionLabel: (option) => option,
     onChange: (_, newValue) => setLineName(newValue),
     value: lineName,
