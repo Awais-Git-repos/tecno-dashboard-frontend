@@ -22,11 +22,13 @@ function Home() {
     const [modelsName, setModelsName] = useState('');
     const [inspectedQty, setInspectedQty] = useState('');
     const [startingDate, setStartingDate] = useState('');
+    const [linesName, setLinesName] = useState('');
     const [endingDate, setEndingDate] = useState('');
 
     const fetchInspectedQty = async()=>{
       try {
-        const response = await axios.post("http://localhost:3000/inspectedQty",{models:modelsName,startDate:startingDate,endDate:endingDate});
+        const response = await axios.post("http://172.17.43.24:3000/inspectedQty",{models:modelsName,startDate:startingDate,endDate:endingDate,
+          lines:linesName});
         console.log("InspectedQty----",response.data);
         setInspectedQty(response.data);
       } catch (error) {
@@ -87,6 +89,7 @@ function Home() {
         <ChartLoader currentChart={currentChart} setRunning={setRunning} setModelsName={setModelsName}
         setStartingDate={setStartingDate}
         setEndingDate={setEndingDate}
+        setLinesName={setLinesName}
         />
     </C_container>
    </Box>

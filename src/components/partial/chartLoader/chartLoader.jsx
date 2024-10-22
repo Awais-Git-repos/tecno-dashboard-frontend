@@ -8,7 +8,7 @@ import HorizontalBarChartByModels from '../../../charts/BarChart/BarChart'
 import HorizontalBarChartByRatio from '../../../charts/HorizontalBarChartByRatio/HorizontalBarChartByRatio'
 import axios from 'axios'
 
-function ChartLoader({currentChart, setRunning, setModelsName, setStartingDate, setEndingDate}) {
+function ChartLoader({currentChart, setRunning, setModelsName, setStartingDate, setEndingDate, setLinesName}) {
   const [models, setModel] = useState('');
   const [defect, setDefect] = useState('');
   const [lines, setLines] = useState('');
@@ -72,6 +72,7 @@ function ChartLoader({currentChart, setRunning, setModelsName, setStartingDate, 
       fetchData();
       fetchRatio();
       setModelsName(modelName);
+      setLinesName(lineName);
       setRunning(true);
     }
     setRun(false);
