@@ -152,6 +152,7 @@ import FilterByLines from '../../components/AutoComplete/FilterByLines';
 import FilterByModels from '../../components/AutoComplete/FilterByModels';
 import axios from 'axios';
 import CircularColor from '../../components/partial/Loader/Loader'; // Assuming you have this component
+import DateRangeFilter from '../../DateRange/DateRangeFilter';
 
 const RatioCard = ({ model, totalDefectsDescriptionQty, scanned, unscanned, reset,
 
@@ -249,15 +250,15 @@ const RatioCardLayout = ({
   lineName,
   setLineName,
   setRun,
-  datas
+  datas,
+  setStartDate,
+  setEndDate,
+  setStartingDate,
+  setEndingDate,
+  setValue,
+  value
 }) => {
   const [data, setData] = useState('');
-  // const data = [
-  //   { totalDefectsDescriptionQty: 254, model: "CL8", scanned: 35, unscanned: 65, reset: 0 },
-  //   { totalDefectsDescriptionQty: 2052, model: "KL5", scanned: 53.7, unscanned: 46.3, reset: 0 },
-  //   { totalDefectsDescriptionQty: 7120, model: "CL6", scanned: 65.3, unscanned: 34.7, reset: 0 },
-  //   { totalDefectsDescriptionQty: 1009, model: "CLA5", scanned: 50.4, unscanned: 49.6, reset: 0 }
-  // ];
 
   useEffect(()=>{
     if(datas){
@@ -284,6 +285,13 @@ const RatioCardLayout = ({
     {/* <Grid2 item xs={12} sm={6}> */}
     <FilterByLines lines={lines} lineName={lineName} setLineName={setLineName}/>
     {/* </Grid2> */}
+    <DateRangeFilter 
+     setStartDate={setStartDate} setEndDate={setEndDate}
+     setStartingDate={setStartingDate}
+     setEndingDate={setEndingDate}
+     setValue={setValue}
+     value={value}
+    />
     <div>
     <Button onClick={()=>{setRun(true)}} variant='contained' sx={{marginTop:'1rem'}}>RUN Query</Button>
     </div>

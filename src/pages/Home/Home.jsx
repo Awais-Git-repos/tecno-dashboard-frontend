@@ -16,6 +16,7 @@ const TecnoLogo = ()=>{
 }
 
 function Home() {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
     const [currentChart, setCurrentChart] = useState('');
     const [visible, setVisible] = useState(false);
     const [running, setRunning] = useState(false);
@@ -27,7 +28,7 @@ function Home() {
 
     const fetchInspectedQty = async()=>{
       try {
-        const response = await axios.post("http://172.17.43.24:3000/inspectedQty",{models:modelsName,startDate:startingDate,endDate:endingDate,
+        const response = await axios.post(`http://${backendUrl}/inspectedQty`,{models:modelsName,startDate:startingDate,endDate:endingDate,
           lines:linesName});
         console.log("InspectedQty----",response.data);
         setInspectedQty(response.data);

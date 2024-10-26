@@ -9,6 +9,7 @@ import HorizontalBarChartByRatio from '../../../charts/HorizontalBarChartByRatio
 import axios from 'axios'
 
 function ChartLoader({currentChart, setRunning, setModelsName, setStartingDate, setEndingDate, setLinesName}) {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [models, setModel] = useState('');
   const [defect, setDefect] = useState('');
   const [lines, setLines] = useState('');
@@ -30,7 +31,7 @@ function ChartLoader({currentChart, setRunning, setModelsName, setStartingDate, 
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://172.17.43.24:3000/combinedGroup',{models:modelName,defects:damageName,lines:lineName,startDate,endDate});
+      const response = await axios.post(`http://${backendUrl}/combinedGroup`,{models:modelName,defects:damageName,lines:lineName,startDate,endDate});
 
     
       // if (Array.isArray(response.data) && response.data.length > 0) {
@@ -57,7 +58,7 @@ function ChartLoader({currentChart, setRunning, setModelsName, setStartingDate, 
 
   const fetchRatio = async()=>{
     try {
-      const response = await axios.post("http://172.17.43.24:3000/defectsRatio",{models:modelName,lines:lineName,defectsDescription:damageName})
+      const response = await axios.post(`http://${backendUrl}/defectsRatio`,{models:modelName,lines:lineName,defectsDescription:damageName,startDate,endDate})
       console.log("The Defects Ratio: ",response.data);
       setGroupByRatio(response.data);
     } catch (error) {
@@ -166,6 +167,10 @@ function ChartLoader({currentChart, setRunning, setModelsName, setStartingDate, 
     setLineName={setLineName}
     setStartDate={setStartDate}
     setEndDate={setEndDate}
+    setStartingDate={setStartingDate}
+    setEndingDate={setEndingDate}
+    setValue={setValue}
+    value={value}
     />}
 
     </Box>
