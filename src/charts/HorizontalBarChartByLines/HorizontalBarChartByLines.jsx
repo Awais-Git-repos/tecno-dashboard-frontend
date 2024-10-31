@@ -9,6 +9,7 @@ import FilterByModels from '../../components/AutoComplete/FilterByModels';
 import FilterByLines from '../../components/AutoComplete/FilterByLines';
 import { Button, Grid2 } from '@mui/material';
 import DateRangeFilter from '../../DateRange/DateRangeFilter';
+import BasicTable from '../../TableComponent';
 
 
 const CustomLegend = (props) => {
@@ -95,19 +96,8 @@ const CustomToolTip = ({ active, payload, label }) => {
 
         {/* Display Top Lines */}
         <h4 style={{ color: '#ffffff', marginTop: '1rem' }}>Top Models:</h4>
-        <ul style={{ listStyle: 'none', paddingLeft: 0}}>
-          {modelData?.topModels?.map((line, index) => (
-            <li key={index} style={{ 
-              color: '#ffffff',
-               display: 'flex',
-              justifyContent: 'space-between',
-              // border:'1px solid white',
-              minWidth: '200px', }}>
-                <div>{line.model}</div>
-                <div>{line.qty}</div>
-            </li>
-          ))}
-        </ul>
+  
+        <BasicTable topLines={modelData?.topModels} flag="defect" />
       </div>
     );
   }

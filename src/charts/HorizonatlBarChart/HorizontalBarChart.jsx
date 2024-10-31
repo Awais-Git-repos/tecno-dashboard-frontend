@@ -9,6 +9,7 @@ import FilterByDefects from '../../components/AutoComplete/FilterByDefects';
 import FilterByModels from '../../components/AutoComplete/FilterByModels';
 import FilterByLines from '../../components/AutoComplete/FilterByLines';
 import DateRangeFilter from '../../DateRange/DateRangeFilter';
+import BasicTable from '../../TableComponent';
 
 const CustomLegend = (props) => {
   const { payload, scanned,unscanned,reset,setScanned, setUnscanned, setReset } = props; // Access the legend values
@@ -91,20 +92,9 @@ const CustomToolTip = ({ active, payload, label }) => {
         </ul>
 
         {/* Display Top Lines */}
-        <h4 style={{ color: '#ffffff', marginTop: '1rem' }}>Top Models:</h4>
-        <ul style={{ listStyle: 'none', paddingLeft: 0}}>
-          {modelData?.topModels?.map((line, index) => (
-            <li key={index} style={{ 
-              color: '#ffffff',
-               display: 'flex',
-              justifyContent: 'space-between',
-              // border:'1px solid white',
-              minWidth: '200px', }}>
-                <div>{line.model}</div>
-                <div>{line.qty}</div>
-            </li>
-          ))}
-        </ul>
+        <h4 style={{ color: '#ffffff', marginTop: '1rem' }}>Top Lines:</h4>
+  
+        <BasicTable topLines={modelData?.topModels} flag="defect" />
       </div>
     );
   }

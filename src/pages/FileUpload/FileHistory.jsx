@@ -14,7 +14,7 @@
 //   useEffect(() => {
 //     const fetchFiles = async () => {
 //       try {
-//         const response = await fetch('http://172.17.43.24:3000/fileupload/fileData');
+//         const response = await fetch('http://localhost:3000/fileupload/fileData');
 //         const data = await response.json();
 //         setFiles(data); // Set fetched data
 //         setFilteredFiles(data); // Initialize filtered files with all data
@@ -141,7 +141,7 @@ function FileHistory() {
   useEffect(() => {
     const infectedRecords = async()=>{
       try {
-        const response = await axios.delete('http://172.17.43.24:3000/fileupload/fileError');
+        const response = await axios.delete('http://localhost:3000/fileupload/fileError');
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -149,7 +149,7 @@ function FileHistory() {
     }
     const fetchFiles = async () => {
       try {
-        const response = await fetch('http://172.17.43.24:3000/fileupload/fileData');
+        const response = await fetch('http://localhost:3000/fileupload/fileData');
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         setFiles(data);
@@ -184,7 +184,7 @@ function FileHistory() {
     setDeleting(true);
 
     try {
-      const response = await fetch('http://172.17.43.24:3000/fileupload/fileDelete', {
+      const response = await fetch('http://localhost:3000/fileupload/fileDelete', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

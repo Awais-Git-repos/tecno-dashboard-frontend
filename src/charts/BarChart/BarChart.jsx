@@ -7,6 +7,7 @@ import FilterByModels from '../../components/AutoComplete/FilterByModels.jsx';
 import FilterByDefects from '../../components/AutoComplete/FilterByDefects.jsx';
 import FilterByLines from '../../components/AutoComplete/FilterByLines.jsx';
 import DateRangeFilter from '../../DateRange/DateRangeFilter.jsx';
+import BasicTable from '../../TableComponent.jsx';
 
 const CustomLegend = (props) => {
   const { payload, scanned,unscanned,reset,setScanned, setUnscanned, setReset } = props; // Access the legend values
@@ -35,6 +36,64 @@ const CustomLegend = (props) => {
 };
 
 // Custom Tooltip Component
+// const CustomToolTip = ({ active, payload, label }) => {
+//   if (active && payload && payload.length) {
+//     // Sort payload for tooltip
+//     const sortedPayload = [...payload].sort((a, b) => b.value - a.value);
+//     const modelData = sortedPayload[0]?.payload; // Get model data from payload
+
+//     return (
+//       <div
+//         style={{
+//           backgroundColor: 'rgba(10, 13, 32, 0.6)',
+//           backdropFilter: 'blur(10px)',
+//           padding: '1rem',
+//           borderRadius: '10px',
+//         }}
+//       >
+//         <h3 style={{ color: 'white', marginLeft: '1rem', marginTop: '1rem' }}>
+//           {label}
+//         </h3>
+//         <ul style={{ listStyle: 'none' }}>
+//           {sortedPayload.map(
+//             (dt) =>
+//               dt.value !== 0 && (
+//                 <li
+//                   key={dt.name}
+//                   style={{
+//                     color: dt.fill,
+//                     display: 'flex',
+//                     justifyContent: 'space-between',
+//                     minWidth: '200px',
+//                   }}
+//                 >
+//                   <div>{dt.name}</div>
+//                   <div>{dt.value}</div>
+//                 </li>
+//               )
+//           )}
+//         </ul>
+
+//         {/* Display Top Lines */}
+//         <h4 style={{ color: '#ffffff', marginTop: '1rem' }}>Top Lines:</h4>
+//         <ul style={{ listStyle: 'none', paddingLeft: 0,}}>
+//           {modelData?.topLines?.map((line, index) => (
+//             <li key={index} style={{ 
+//               color: '#ffffff',
+//                display: 'flex',
+//               justifyContent: 'space-between',
+//               // border:'1px solid white',
+//               minWidth: '200px', }}>
+//                 <div>{line.line}</div>
+//                 <div>{line.qty}</div>
+//             </li>
+//           ))}
+//         </ul>
+//       </div>
+//     );
+//   }
+//   return null;
+// };
 const CustomToolTip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     // Sort payload for tooltip
@@ -75,24 +134,21 @@ const CustomToolTip = ({ active, payload, label }) => {
 
         {/* Display Top Lines */}
         <h4 style={{ color: '#ffffff', marginTop: '1rem' }}>Top Lines:</h4>
-        <ul style={{ listStyle: 'none', paddingLeft: 0,}}>
-          {modelData?.topLines?.map((line, index) => (
-            <li key={index} style={{ 
-              color: '#ffffff',
-               display: 'flex',
-              justifyContent: 'space-between',
-              // border:'1px solid white',
-              minWidth: '200px', }}>
-                <div>{line.line}</div>
-                <div>{line.qty}</div>
-            </li>
-          ))}
-        </ul>
+  
+        <BasicTable topLines={modelData?.topLines} />
       </div>
     );
   }
   return null;
 };
+
+
+
+
+
+
+
+
 
 // Main Component
 function HorizontalBarChartByModels({
@@ -127,7 +183,7 @@ function HorizontalBarChartByModels({
   return loading ? (
     <CircularColor />
   ) : (
-     sortedData ? <ResponsiveContainer width="120%" height={500}>
+     sortedData ? <ResponsiveContainer width="120%" height={600}>
      <h1 style={{ fontSize: '1.2rem', marginTop: '1rem', color: 'gray' }}>
        Top Affected Models
      </h1>

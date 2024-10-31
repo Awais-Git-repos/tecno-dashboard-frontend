@@ -93,7 +93,7 @@
 //     });
 
 //     try {
-//       const response = await fetch('http://172.17.43.24:3000/fileupload', {
+//       const response = await fetch('http://localhost:3000/fileupload', {
 //         method: 'POST',
 //         body: formData,
 //       });
@@ -346,7 +346,7 @@ function FileUpload() {
     });
 
     try {
-      const response = await fetch('http://172.17.43.24:3000/fileupload', {
+      const response = await fetch('http://localhost:3000/fileupload', {
         method: 'POST',
         body: formData,
       });
@@ -369,7 +369,7 @@ function FileUpload() {
 
   const handleDeleteErrorFile = async (fileId) => {
     try {
-      const response = await fetch('http://172.17.43.24:3000/fileupload/fileError', {
+      const response = await fetch('http://localhost:3000/fileupload/fileError', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
